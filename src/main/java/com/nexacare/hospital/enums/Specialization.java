@@ -1,0 +1,17 @@
+package com.nexacare.hospital.enums;
+
+public enum Specialization {
+    CARDIOLOGIST,
+    NEUROLOGIST,
+    ORTHOPEDIC_SURGEON,
+    PEDIATRICIAN,
+    GYNECOLOGIST,
+    DERMATOLOGIST,
+    ENT_SPECIALIST,
+    OPHTHALMOLOGIST,
+    ONCOLOGIST,
+    UROLOGIST,
+    RADIOLOGIST,
+    GENERAL_PHYSICIAN,
+    GENERAL_SURGEON
+}
