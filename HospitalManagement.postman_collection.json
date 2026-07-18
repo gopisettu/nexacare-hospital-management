@@ -1,0 +1,271 @@
+{
+  "info": {
+    "_postman_id": "694582a0-f26b-422e-8d05-77d47a3f8cc5",
+    "name": "HospitalManagement",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "51046711",
+    "_collection_link": "https://go.postman.co/collection/51046711-694582a0-f26b-422e-8d05-77d47a3f8cc5?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Register-Patient",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\":\"gopal@gmail.com\",\r\n    \"password\":\"gopal@123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/api/patient/register-patient",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "patient",
+            "register-patient"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update-PatientProfile",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"firstName\": \"Arjun\",\r\n  \"lastName\": \"Kumar\",\r\n  \"gender\": \"MALE\",\r\n  \"dob\": \"2002-05-15\",\r\n  \"aadharNumber\": \"123456789012\",\r\n  \"bloodGroup\": \"O_POSITIVE\",\r\n  \"phone\": \"9876543210\",\r\n  \"email\": \"gopi.settu@example.com\",\r\n  \"address\": \"123, MG Road, Bengaluru, Karnataka\",\r\n  \"allergies\": \"Penicillin\",\r\n  \"chronicDisease\": \"Diabetes\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/api/patient/update-patientProfile/ram@gmail.com",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "patient",
+            "update-patientProfile",
+            "ram@gmail.com"
+          ],
+          "query": [
+            {
+              "key": "username",
+              "value": "gopal@gmail.com",
+              "disabled": true
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Register-Doctor",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\":\"doctor@gmail.com\",\r\n    \"password\":\"doctor@123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/api/doctor/register-doctor",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "doctor",
+            "register-doctor"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update-DoctorProfile",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"firstName\": \"Arun\",\r\n  \"lastName\": \"Kumar\",\r\n  \"gender\": \"MALE\",\r\n  \"phone\": \"9876543210\",\r\n  \"email\": \"arun.kumar@nexacare.com\",\r\n  \"address\": \"No. 45, Anna Nagar, Chennai, Tamil Nadu\",\r\n  \"qualification\": \"MBBS\",\r\n  \"department\": \"CARDIOLOGY\",\r\n  \"specialization\": \"CARDIOLOGIST\",\r\n  \"totalExperienceYear\": 12,\r\n  \"consultationFee\": 750.0\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/api/doctor/update-doctorProfile/gopaldc@gmail.com",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "doctor",
+            "update-doctorProfile",
+            "gopaldc@gmail.com"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetAll-Patinet",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "GetPatient-ByUserName",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "DeActivate-Patient",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\":\"doctor@gmail.com\",\r\n    \"password\":\"doctor@123\"\r\n}"
+        },
+        "url": {
+          "raw": "localhost:8080/api/patient/deActivate-ByPatient/patient1@gmail.com",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "patient",
+            "deActivate-ByPatient",
+            "patient1@gmail.com"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DeActivate-Doctor",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "GetDoctor-ByUsername",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "GetAll-Doctor",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "New Request",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "GetAppointment-ByDoctor",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "BookAppointment-ByPatient",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"doctorId\": 3,\r\n    \"appointmentDate\": \"2026-07-22\",\r\n    \"appointmentTime\": \"12:00:00\",\r\n    \"reason\": \"VACCINATION\",\r\n    \"notes\": \"General Polio VACCINATION\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "localhost:8080/api/patient/book-doctorByPatient/patient@gmail.com",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "patient",
+            "book-doctorByPatient",
+            "patient@gmail.com"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
