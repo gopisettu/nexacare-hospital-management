@@ -1,4 +1,4 @@
-package com.nexacare.hospital.dto.request;
+package com.nexacare.hospital.dto.response;
 
 import com.nexacare.hospital.enums.BloodGroup;
 import com.nexacare.hospital.enums.Gender;

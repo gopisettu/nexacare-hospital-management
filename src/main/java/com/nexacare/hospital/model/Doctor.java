@@ -45,6 +45,7 @@ public class Doctor {
     @Column(length = 255)
     private String address;
 
+
     @Enumerated(EnumType.STRING)
     private Qualification qualification;
 

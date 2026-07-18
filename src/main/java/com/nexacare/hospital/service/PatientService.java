@@ -2,18 +2,21 @@ package com.nexacare.hospital.service;
 
 import com.nexacare.hospital.dto.request.PatientProfileDto;
 import com.nexacare.hospital.dto.request.PatientRegisterDto;
+import com.nexacare.hospital.dto.response.PatientResDto;
 import com.nexacare.hospital.enums.Role;
 import com.nexacare.hospital.exception.ResourceNotFoundException;
-import com.nexacare.hospital.mapper.dtotoentity.PatientMapper;
+import com.nexacare.hospital.mapper.dtotoentity.PatientDtoMapper;
+import com.nexacare.hospital.mapper.entitytodto.PatientEntityMapper;
 import com.nexacare.hospital.model.Patient;
 import com.nexacare.hospital.model.User;
 import com.nexacare.hospital.repositories.PatientRepository;
 import com.nexacare.hospital.repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.lang.module.ResolutionException;
-import java.util.Optional;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -21,6 +24,7 @@ import java.util.Optional;
 public class PatientService {
     private  final PatientRepository patientRepository;
     private final UserRepository userRepository;
+    private  final PatientEntityMapper patientEntityMapper;
     public void registerPatient(PatientRegisterDto patientDto) {
         Patient patient=new Patient();
         User user=new User();
@@ -37,10 +41,44 @@ public class PatientService {
     }
 
     public void updateProfile(PatientProfileDto patientProfileDto, String username) {
-        User user=userRepository.findByUser(username)
+        User user=userRepository.findByUserUsername(username)
                 .orElseThrow(()->new ResourceNotFoundException("Patient UserName not found"));
          Patient patient=patientRepository.findByUserId(user.getId()).orElseThrow(()-> new ResourceNotFoundException("Patient Id not found"));
-               patient=PatientMapper.mapDtoToPatient(patientProfileDto,patient);
+               patient= PatientDtoMapper.mapDtoToPatient(patientProfileDto,patient);
          patientRepository.save(patient);
     }
+
+    public List<PatientResDto> getAllPatient(int page,int size) {
+        Pageable pageable=PageRequest.of(page,size);
+        List<Patient> patientList=patientRepository.findAll(pageable).getContent();
+         return  patientList.stream()
+                .map((p)->patientEntityMapper.mapPatientEntityToDto(p))
+                .toList();
+
+    }
+
+    public PatientResDto getPatientByUsername(String username) {
+
+        User user = userRepository.findByUserUsername(username)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Username not found"));
+
+        Patient patient = patientRepository.findByUserId(user.getId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Patient not found"));
+
+        return patientEntityMapper.mapPatientEntityToDto(patient);
+    }
+
+    public void deActivatePatient(String username) {
+        User user =userRepository.findByUserUsername(username)
+                        .orElseThrow(()->new ResourceNotFoundException("User nameName not found"));
+       user.setActive(false);
+        userRepository.save(user);
+    }
+
+
+
+
+
 }

@@ -1,12 +1,11 @@
 package com.nexacare.hospital.mapper.dtotoentity;
 
 import com.nexacare.hospital.dto.request.PatientProfileDto;
-import com.nexacare.hospital.dto.request.PatientRegisterDto;
 import com.nexacare.hospital.model.Patient;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PatientMapper {
+public class PatientDtoMapper {
  public static Patient mapDtoToPatient(PatientProfileDto patientProfileDto,Patient patient){
 
      patient.setFirstName(patientProfileDto.firstName());
@@ -22,4 +21,5 @@ public class PatientMapper {
      patient.setChronicDisease(patient.getChronicDisease());
      return patient;
  }
+
 }

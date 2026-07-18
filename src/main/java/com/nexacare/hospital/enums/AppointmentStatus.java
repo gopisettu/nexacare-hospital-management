@@ -1,8 +1,14 @@
 package com.nexacare.hospital.enums;
 
 public enum AppointmentStatus {
-    SCHEDULED,
-    COMPLETED,
-    CANCELLED,
-    NO_SHOW
+    PENDING,
+            SCHEDULED,
+            CONFIRMED,
+            CHECKED_IN,
+            IN_PROGRESS,
+            COMPLETED,
+            CANCELLED,
+            RESCHEDULED,
+            NO_SHOW
+
 }

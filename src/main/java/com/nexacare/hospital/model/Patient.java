@@ -22,7 +22,7 @@ public class Patient {
      @GeneratedValue(strategy = GenerationType.IDENTITY)
      private Long id;
 
-     @OneToOne(cascade = CascadeType.ALL)
+     @OneToOne
      @JoinColumn(name = "user_id", nullable = false, unique = true)
      private User user;
 
@@ -31,6 +31,7 @@ public class Patient {
      @Column(length = 50)
      private String firstName;
      private String lastName;
+
 
      @Enumerated(EnumType.STRING)
      private Gender gender;

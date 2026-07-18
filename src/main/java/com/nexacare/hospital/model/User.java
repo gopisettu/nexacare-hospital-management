@@ -25,6 +25,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+    @Column(updatable = true)
+    private boolean isActive=true;
     @CreationTimestamp
     private Instant createdAt;
 
