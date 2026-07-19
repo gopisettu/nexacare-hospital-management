@@ -26,4 +26,5 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
             ORDER BY a.appointmentDate DESC
             """)
     List<Appointment> findByPatientUserUsername(String username, Pageable pageable);
+
 }

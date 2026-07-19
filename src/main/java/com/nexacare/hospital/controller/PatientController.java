@@ -3,6 +3,7 @@ package com.nexacare.hospital.controller;
 import com.nexacare.hospital.dto.request.BookAppointmentDto;
 import com.nexacare.hospital.dto.request.PatientProfileDto;
 import com.nexacare.hospital.dto.request.PatientRegisterDto;
+import com.nexacare.hospital.dto.response.AppointmentResDto;
 import com.nexacare.hospital.dto.response.PatientResDto;
 import com.nexacare.hospital.service.AppointmentService;
 import com.nexacare.hospital.service.PatientService;
@@ -67,6 +68,13 @@ public class PatientController {
     @PostMapping("/book-doctorByPatient/{username}")
     public void bookDoctor(@PathVariable String username, @RequestBody BookAppointmentDto bookAppointmentDto){
         appointmentService.bookDoctor(username, bookAppointmentDto);
+
+    }
+    @GetMapping("/allAppointment-ByPatient/{username}")
+    public List<AppointmentResDto> showAllAppointmentByPatient(@PathVariable String username,
+                                                              @RequestParam(required = false,defaultValue = "0") Integer page,
+                                                              @RequestParam(required = false,defaultValue = "20") Integer size){
+        return appointmentService.showAllAppointmentByPatient(username,page,size);
 
     }
 
