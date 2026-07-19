@@ -88,16 +88,5 @@ doctorRepository.save(doctor);
         userRepository.save(user);
     }
 
-    public List<AppointmentResDto> showAllAppointmentByDoctor(String username,Integer page,Integer size) {
-       Pageable pageable= PageRequest.of(page,size);
-        User user=userRepository.findByUserUsername(username).
-                orElseThrow(()->new ResourceNotFoundException("Doctor username not found"));
 
-        List<Appointment> appointment=userRepository.getAllAppointmentByDoctor(user.getId(),pageable);
-        return appointment.stream()
-                        .map((a)->appointmentEntityToDto.mapAppointmentEntityToDto(a))
-                .toList();
-
-
-    }
 }

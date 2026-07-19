@@ -5,9 +5,11 @@ import com.nexacare.hospital.dto.request.DoctorRegisterDto;
 import com.nexacare.hospital.dto.response.AppointmentResDto;
 import com.nexacare.hospital.dto.response.DoctorResDto;
 import com.nexacare.hospital.model.Doctor;
+import com.nexacare.hospital.service.AppointmentService;
 import com.nexacare.hospital.service.DoctorService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 public class DoctorController {
     private final DoctorService doctorService;
+    private  final AppointmentService appointmentService;
 
     @PostMapping("/register-doctor")
     public void registerDoctor( @Valid @RequestBody DoctorRegisterDto doctorRegisterDto){
@@ -46,9 +49,9 @@ public class DoctorController {
 
     @GetMapping("/allAppointment-ByDoctor/{username}")
     public List<AppointmentResDto> showAllAppointmentByDoctor(@PathVariable String username,
-                                                        @RequestParam(required = false,defaultValue = "0") Integer page,
-                                                        @RequestParam(required = false,defaultValue = "3") Integer size){
-        return doctorService.showAllAppointmentByDoctor(username,page,size);
+                                                              @RequestParam(required = false,defaultValue = "0") Integer page,
+                                                              @RequestParam(required = false,defaultValue = "20") Integer size){
+        return appointmentService.showAllAppointmentByDoctor(username,page,size);
 
     }
 }

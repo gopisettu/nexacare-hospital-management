@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.lang.ScopedValue;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,4 +24,6 @@ SELECT a FROM Appointment a WHERE a.doctor.id=?1
 
 """)
 List<Appointment> getAllAppointmentByDoctor(Long id, Pageable pageable);
+
+    Optional<User> findByUsername(String username);
 }
