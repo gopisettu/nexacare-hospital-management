@@ -4,7 +4,9 @@ import com.nexacare.hospital.dto.request.DoctorProfileDto;
 import com.nexacare.hospital.dto.request.DoctorRegisterDto;
 import com.nexacare.hospital.dto.response.AppointmentResDto;
 import com.nexacare.hospital.dto.response.DoctorResDto;
+import com.nexacare.hospital.enums.Department;
 import com.nexacare.hospital.enums.Role;
+import com.nexacare.hospital.enums.Specialization;
 import com.nexacare.hospital.exception.ResourceNotFoundException;
 import com.nexacare.hospital.mapper.dtotoentity.DoctorMapper;
 import com.nexacare.hospital.mapper.entitytodto.AppointmentEntityToDto;
@@ -89,4 +91,33 @@ doctorRepository.save(doctor);
     }
 
 
+    public List<DoctorResDto> searchDoctorBySpecialization(String username, Specialization specialization) {
+         User user =userRepository.findByUsername(username)
+                 .orElseThrow(()->new ResourceNotFoundException("Doctor username not found"));
+        List<Doctor> doctorList=doctorRepository.searchDoctorBySpecialization(specialization);
+        if (doctorList.isEmpty()) {
+            throw new ResourceNotFoundException(
+                    "No doctors found for specialization: " + specialization);
+        }
+         return  doctorList
+                .stream()
+                .map((d)->doctorDtoMapper.mapDoctorEntityToDto(d))
+                .toList();
+    }
+
+    public List<DoctorResDto> searchDoctorByDepartment(String username, Department department)
+    {
+        User user =userRepository.findByUsername(username)
+                .orElseThrow(()->new ResourceNotFoundException("Doctor username not found"));
+
+        List<Doctor> doctorList=doctorRepository.searchDoctorByDepartment(department);
+        if (doctorList.isEmpty()) {
+            throw new ResourceNotFoundException(
+                    "No doctors found for Department: " + department);
+        }
+        return  doctorList
+                .stream()
+                .map((d)->doctorDtoMapper.mapDoctorEntityToDto(d))
+                .toList();
+    }
 }

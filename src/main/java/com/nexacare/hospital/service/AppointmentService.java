@@ -3,14 +3,16 @@ package com.nexacare.hospital.service;
 import com.nexacare.hospital.dto.request.*;
 import com.nexacare.hospital.dto.response.AppointmentResDto;
 import com.nexacare.hospital.enums.AppointmentStatus;
+import com.nexacare.hospital.exception.DoctorAlreadyBookedException;
+import com.nexacare.hospital.exception.InvalidAppointmentStateException;
 import com.nexacare.hospital.exception.ResourceNotFoundException;
+import com.nexacare.hospital.exception.UnauthorizedOperationException;
 import com.nexacare.hospital.mapper.PrescriptionMapper;
 import com.nexacare.hospital.mapper.dtotoentity.AppointmentMapper;
 import com.nexacare.hospital.mapper.entitytodto.AppointmentEntityToDto;
 import com.nexacare.hospital.model.*;
 import com.nexacare.hospital.repositories.*;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,16 @@ private  final PrescriptionItemRepository prescriptionItemRepository;
 
         Doctor doctor = doctorRepository.findById(dto.doctorId())
                 .orElseThrow(() -> new ResourceNotFoundException("Doctor not found"));
+
+        // Check if the doctor already has an appointment for the same date and time
+        boolean conflict = appointmentRepository.countConflictingAppointments(
+                doctor.getId(),
+                dto.appointmentDate(),
+                dto.appointmentTime()) > 0;
+
+        if (conflict) {
+            throw new DoctorAlreadyBookedException("Doctor already booked.");
+        }
 
         Appointment appointment = appointmentMapper.mapDoctorDtoToEntity(dto);
 
@@ -99,9 +111,13 @@ private  final PrescriptionItemRepository prescriptionItemRepository;
                 .orElseThrow(()->new ResourceNotFoundException("Appointment Id not Found"));
 // step 3. check for the particular appointment belong to the doctor
         if( ! appointment.getDoctor().getId().equals(doctor.getId())){
-            throw  new RuntimeException("You are not authorized to update this appointment");
+            throw  new UnauthorizedOperationException("You are not authorized to update this appointment");
         }
-//        step4: update the appointment and save it
+//        step 4:Check for update status for Already Completed Appointment
+        if(appointment.getAppointmentStatus()== AppointmentStatus.COMPLETED){
+            throw new InvalidAppointmentStateException("Unable to update status for Already CompletedAppointment");
+        }
+//        step5: update the appointment and save it
         appointment.setAppointmentTime(rescheduleAppointmentDto.appointmentTime());
         appointment.setAppointmentDate(rescheduleAppointmentDto.appointmentDate());
         appointment.setAppointmentStatus(rescheduleAppointmentDto.appointmentStatus());

@@ -27,6 +27,9 @@ public class Doctor {
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
+    // Everything below is filled in later via PUT /update-profile,
+    // so nothing here can be NOT NULL at registration time.
+
     @Column(length = 50)
     private String firstName;
 

@@ -4,8 +4,11 @@ import com.nexacare.hospital.model.Appointment;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Repository
@@ -26,5 +29,17 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
             ORDER BY a.appointmentDate DESC
             """)
     List<Appointment> findByPatientUserUsername(String username, Pageable pageable);
+
+    @Query(value = """
+    SELECT COUNT(*)
+    FROM appointment
+    WHERE doctor_id = :doctorId
+      AND appointment_date = :appointmentDate
+      AND appointment_time = :appointmentTime
+    """, nativeQuery = true)
+    long countConflictingAppointments(
+            @Param("doctorId") Long doctorId,
+            @Param("appointmentDate") LocalDate appointmentDate,
+            @Param("appointmentTime") LocalTime appointmentTime);
 
 }

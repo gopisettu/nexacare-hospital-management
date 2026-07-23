@@ -4,8 +4,12 @@ import com.nexacare.hospital.dto.request.BookAppointmentDto;
 import com.nexacare.hospital.dto.request.PatientProfileDto;
 import com.nexacare.hospital.dto.request.PatientRegisterDto;
 import com.nexacare.hospital.dto.response.AppointmentResDto;
+import com.nexacare.hospital.dto.response.DoctorResDto;
 import com.nexacare.hospital.dto.response.PatientResDto;
+import com.nexacare.hospital.enums.Department;
+import com.nexacare.hospital.enums.Specialization;
 import com.nexacare.hospital.service.AppointmentService;
+import com.nexacare.hospital.service.DoctorService;
 import com.nexacare.hospital.service.PatientService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +22,7 @@ import java.util.List;
 public class PatientController {
     private final PatientService patientService;
     private final AppointmentService appointmentService;
+    private final DoctorService doctorService;
 /*
 {
     "username":"raja@gmail.com",
@@ -76,6 +81,15 @@ public class PatientController {
                                                               @RequestParam(required = false,defaultValue = "20") Integer size){
         return appointmentService.showAllAppointmentByPatient(username,page,size);
 
+    }
+    @GetMapping("/searchDoctor-bySpecialization/{username}/{specialization}")
+    public List<DoctorResDto> searchDoctorBySpecialization(@PathVariable String username, @PathVariable Specialization specialization){
+        return doctorService.searchDoctorBySpecialization(username,specialization);
+    }
+
+    @GetMapping("/searchDoctor-byDepartment/{username}/{department}")
+    public List<DoctorResDto> searchDoctorByDepartment(@PathVariable String username, @PathVariable Department department){
+        return doctorService.searchDoctorByDepartment(username,department);
     }
 
 

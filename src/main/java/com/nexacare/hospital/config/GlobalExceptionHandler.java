@@ -1,8 +1,11 @@
 package com.nexacare.hospital.config;
 
 import com.nexacare.hospital.dto.response.ErrorMessageDto;
+import com.nexacare.hospital.exception.DoctorAlreadyBookedException;
+import com.nexacare.hospital.exception.InvalidAppointmentStateException;
 import com.nexacare.hospital.exception.ResourceNotFoundException;
-import lombok.AllArgsConstructor;
+import com.nexacare.hospital.exception.UnauthorizedOperationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
+
 
 public class GlobalExceptionHandler {
 
@@ -43,7 +47,26 @@ return  ResponseEntity
 
         return ResponseEntity.badRequest().body(errors);
     }
+    @ExceptionHandler(UnauthorizedOperationException.class)
+    public ResponseEntity<ErrorMessageDto> handleUnauthorizedOperationException(
+            UnauthorizedOperationException ex) {
 
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(new ErrorMessageDto(ex.getMessage()));
+    }
+    @ExceptionHandler(InvalidAppointmentStateException.class)
+    public ResponseEntity<ErrorMessageDto>handleInvalidAppointmentStateException(InvalidAppointmentStateException e){
+        return  ResponseEntity
+                .badRequest()
+                .body(new ErrorMessageDto(e.getMessage()));
+    }
+    @ExceptionHandler(DoctorAlreadyBookedException.class)
+    public ResponseEntity<ErrorMessageDto>handleDoctorAlreadyBookedException(DoctorAlreadyBookedException e){
+        return  ResponseEntity
+                .badRequest()
+                .body(new ErrorMessageDto(e.getMessage()));
+    }
 
 
 }
